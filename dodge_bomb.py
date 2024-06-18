@@ -4,7 +4,7 @@ import sys
 import pygame as pg
 
 
-WIDTH, HEIGHT = 1600, 900
+WIDTH, HEIGHT = 1200, 700
 DELTA = {  #移動量辞書
     pg.K_UP: (0, -5),
     pg.K_DOWN: (0, +5),
@@ -12,6 +12,14 @@ DELTA = {  #移動量辞書
     pg.K_RIGHT: (+5, 0),
 }
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
+    yoko, tate = True, True
+    if rct.left < 0 or WIDTH < rct.right:
+        yoko = False
+    if rct.top < 0 or HEIGHT < rct.bottom:
+        tate = False
+    return yoko, tate
 
 
 def main():
@@ -42,6 +50,8 @@ def main():
                 sum_mv[0] += v[0]
                 sum_mv[1] += v[1]
         kk_rct.move_ip(sum_mv)
+        if check_bound(kk_rct) != (True, True):
+            kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
         screen.blit(kk_img, kk_rct)
         bb_rct.move_ip(vx, vy)
         screen.blit(bb_img, bb_rct)
