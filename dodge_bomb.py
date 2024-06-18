@@ -22,18 +22,19 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
         tate = False
     return yoko, tate
 
-def kk_direction() -> dict:
-    KK_DICT = {  #押下キーに対する移動量の辞書
-        (0, 0): pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 2.0),
-        (-5, 0): pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 2.0),
-        (-5, -5): pg.transform.rotozoom(pg.image.load("fig/3.png"), -45, 2.0),
-        (0, -5): pg.transform.flip(pg.transform.rotozoom(pg.image.load("fig/3.png"), 90, 2.0), False, True),
-        (+5, -5): pg.transform.flip(pg.transform.rotozoom(pg.image.load("fig/3.png"), -45, 2.0), True, False),
-        (+5, 0): pg.transform.flip(pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 2.0), True, False),
-        (+5, +5): pg.transform.flip(pg.transform.rotozoom(pg.image.load("fig/3.png"), 45, 2.0), True, False),
-        (0, +5): pg.transform.flip(pg.transform.rotozoom(pg.image.load("fig/3.png"), 270, 2.0), False, True),
-        (-5, +5): pg.transform.rotozoom(pg.image.load("fig/3.png"), 315, 2.0),
-        (-5, +5): pg.transform.rotozoom(pg.image.load("fig/3.png"), 45, 2.0)
+def kk_direction() -> dict:  #押下キーに対する移動量の辞書
+    kk_img0 = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 2.0)
+    kk_img = pg.transform.flip(kk_img0, True, False)
+    KK_DICT = {  #リストの短縮化に成功。
+        (0, 0): kk_img,
+        (5, 0): kk_img,
+        (5, -5): pg.transform.rotozoom(kk_img, 45, 1.0),
+        (0, -5): pg.transform.rotozoom(kk_img, 90, 1.0),
+        (-5, -5): pg.transform.rotozoom(kk_img0, -45, 1.0),
+        (-5, 0): kk_img0,
+        (-5, 5): pg.transform.rotozoom(kk_img0, 45, 1.0),
+        (0, 5): pg.transform.rotozoom(kk_img, -90, 1.0),
+        (5, 5): pg.transform.rotozoom(kk_img, -45, 1.0)
     }
     return KK_DICT
 
